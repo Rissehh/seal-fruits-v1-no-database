@@ -1,6 +1,11 @@
 // import express
 const express = require("express")
 
+// import morgan
+const morgan = require("morgan")
+// import method override
+const methodOverride = require("method-override")
+
 // import our fruits
 // require will return the value of module.exports
 const fruits = require("./models/fruits.js")
@@ -22,6 +27,9 @@ app.get("/fruits", (req, res) => {
     // {fruits} => {fruits:fruits}
     res.render("index.ejs", {fruits})
 })
+
+app.use(morgan("dev"))
+app.use(methodOverride("_method"))
 
 // express.urlencoded (prase url encoded bodies)
 // add the data to req.body
@@ -49,6 +57,21 @@ app.post("/fruits", (req, res) => {
 
     // res.send(body)
 })
+
+app.delete("/fruits/:id", (req, res) => {
+    const id = req.params.id
+    fruits.splice(id, 1)
+    res.redirect("/fruits")
+
+})
+
+
+
+
+
+
+
+
 // fruits show route
 // get request to /fruits/:id
 // return a single fruit
