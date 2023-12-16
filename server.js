@@ -23,6 +23,32 @@ app.get("/fruits", (req, res) => {
     res.render("index.ejs", {fruits})
 })
 
+// express.urlencoded (prase url encoded bodies)
+// add the data to req.body
+app.use(express.urlencoded({extended: true}))
+
+
+
+
+
+
+
+app.get("/fruits/new", (req, res) => {
+    res.render("new.ejs")
+})
+
+app.post("/fruits", (req, res) => {
+    const body = req.body
+    if(body.readyToEat === "on") {
+        body.readyToEat = true
+    } else {
+        body.readyToEat = false
+    }
+    fruits.push(body)
+    res.redirect("/fruits")
+
+    // res.send(body)
+})
 // fruits show route
 // get request to /fruits/:id
 // return a single fruit
